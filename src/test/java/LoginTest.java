@@ -23,7 +23,7 @@ public class LoginTest {
         capabilities.setCapability("automationName","Appium");
         capabilities.setCapability("appPackage", "com.example.login");
         capabilities.setCapability("appActivity", ".ui.login.LoginActivity");
-        capabilities.setCapability("app","/Users/olegbarbashin/Downloads/login.apk");
+        capabilities.setCapability("app","/Users/olegbarbashin/IdeaProjects/Android1/src/apks/login.apk");
 
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
     }
