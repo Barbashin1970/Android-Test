@@ -1,92 +1,70 @@
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
-
+import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import pageobject.RegPage;
 
 import java.net.URL;
+
 
 public class LoginTest {
     private AppiumDriver driver;
 
     @Before
-    public void setUp() throws Exception
-    {
+    public void setUp() throws Exception {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
-        capabilities.setCapability("platformName","Android");
-        capabilities.setCapability("deviceName","Pixel_4_API_29");
-        capabilities.setCapability("platformVersion","10");
-        capabilities.setCapability("automationName","Appium");
+        capabilities.setCapability("platformName", "Android");
+        capabilities.setCapability("deviceName", "Pixel_4_API_29");
+        capabilities.setCapability("platformVersion", "10");
+        capabilities.setCapability("automationName", "Appium");
         capabilities.setCapability("appPackage", "com.example.login");
         capabilities.setCapability("appActivity", ".ui.login.LoginActivity");
-        capabilities.setCapability("app","/Users/olegbarbashin/IdeaProjects/Android1/src/apks/login.apk");
+        capabilities.setCapability("app", "/Users/olegbarbashin/IdeaProjects/Android1/src/apks/login.apk");
 
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
     }
 
     @After
-    public void tearDown()
-    {
+    public void tearDown() {
         driver.quit();
     }
 
+
     @Test
-    public void checkTitleScreen()
-    {
-        WebElement screenTitle = driver.findElementById("com.example.login:id/toolbar");
-        screenTitle.isDisplayed();
+    @DisplayName("Проверяем, что заголовок отображен на главном экране")
+    public void checkTitleScreenPageObject() {
+        RegPage regPage = new RegPage(driver);
+        Assert.assertTrue("Название не отображается на экране", regPage.checkScreenTitle());
     }
 
     @Test
-    public void validRegistrationTest()
-    {
-        WebElement emailInput = driver.findElementById("com.example.login:id/username");
+    @DisplayName("Вводим валидные данные логин и пароль при авторизации")
+    public void validRegistrationTest() {
+        RegPage regPage = new RegPage(driver);
+        regPage.setPassInput("1111");
+        regPage.setPassInput("1111");
+        regPage.setEmailInput("admin@admin.ru");
+        regPage.setPassInput("1234");
+        regPage.signInClick();
+        Assert.assertTrue("Текст успеха не отображается на экране", regPage.successText());
 
-        emailInput.isDisplayed();
-        emailInput.click();
-        emailInput.sendKeys("admin@admin.ru");
-
-        WebElement passInput = driver.findElementById("com.example.login:id/password");
-
-        passInput.isDisplayed();
-        passInput.click();
-        passInput.sendKeys("1234");
-
-        WebElement signInButton = driver.findElementById("com.example.login:id/login");
-
-        signInButton.isDisplayed();
-        signInButton.click();
-
-        WebElement successAuthText = driver.findElementByXPath("//*[contains(@text, 'Welcome ! user')]");
-        successAuthText.isDisplayed();
     }
 
     @Test
-    public void invalidRegistrationTest()
-    {
-        WebElement emailInput = driver.findElementById("com.example.login:id/username");
-
-        emailInput.isDisplayed();
-        emailInput.click();
-        emailInput.sendKeys("user@user.ru");
-
-        WebElement passInput = driver.findElementById("com.example.login:id/password");
-
-        passInput.isDisplayed();
-        passInput.click();
-        passInput.sendKeys("1111");
-
-        WebElement signInButton = driver.findElementById("com.example.login:id/login");
-
-        signInButton.isDisplayed();
-        signInButton.click();
-
-        WebElement successAuthText = driver.findElementByXPath("//*[contains(@text, 'Login failed')]");
-        successAuthText.isDisplayed();
+    @DisplayName("Вводим неверный пароль при авторизации - ожидаем текст ошибки")
+    public void invalidRegistrationTest() {
+        RegPage regPage = new RegPage(driver);
+        regPage.setPassInput("1111");
+        regPage.setPassInput("1244");
+        regPage.setEmailInput("admin@admin.ru");
+        regPage.setPassInput("1111");
+        regPage.signInClick();
+        Assert.assertTrue("Текст ошибки не отображается на экране", regPage.unSuccessText());
     }
 
 }
