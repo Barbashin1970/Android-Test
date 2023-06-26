@@ -1,4 +1,5 @@
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
@@ -11,7 +12,7 @@ import java.net.URL;
 
 
 public class LoginTest {
-    private AppiumDriver driver;
+    private AppiumDriver<MobileElement> driver;
 
     @Before
     public void setUp() throws Exception {
@@ -25,7 +26,7 @@ public class LoginTest {
         capabilities.setCapability("appActivity", ".ui.login.LoginActivity");
         capabilities.setCapability("app", "/Users/olegbarbashin/IdeaProjects/Android1/src/apks/login.apk");
 
-        driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+        driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
     }
 
     @After
