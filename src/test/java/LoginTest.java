@@ -5,16 +5,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import pageobject.RegPage;
-
 import java.net.URL;
-import java.time.Duration;
-
-import static pageobject.RegPage.emailInput;
 
 
 public class LoginTest {
