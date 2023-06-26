@@ -40,11 +40,6 @@
             <version>4.0.0-alpha-1</version>
         </dependency>
 
-        <dependency>
-            <groupId>io.github.bonigarcia</groupId>
-            <artifactId>webdrivermanager</artifactId>
-            <version>4.4.3</version>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/io.appium/java-client -->
         <dependency>
             <groupId>io.appium</groupId>
@@ -112,7 +107,7 @@
                 <artifactId>allure-maven</artifactId>
                 <version>2.10.0</version>
                 <configuration>
-                    <reportVersion>2.22.4</reportVersion>
+                    <reportVersion>2.15.0</reportVersion>
                 </configuration>
             </plugin>
         </plugins>
