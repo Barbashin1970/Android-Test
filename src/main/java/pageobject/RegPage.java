@@ -3,10 +3,16 @@ package pageobject;
 import io.appium.java_client.AppiumDriver;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 public class RegPage {
     private static final By screenTitle = By.id("com.example.login:id/toolbar");
-    private static final By emailInput = By.id("com.example.login:id/username");
+    public static By emailInput = By.id("com.example.login:id/username");
     private static final By passInput = By.id("com.example.login:id/password");
     private static final By signInButton = By.id("com.example.login:id/login");
     private static final By successAuthText = By.xpath("//*[contains(@text, 'Welcome ! user')]");
@@ -25,22 +31,25 @@ public class RegPage {
 
     @Step("Вводим в поле email тестовые данные")
     public void setEmailInput(String email) {
-        //driver.findElement(emailInput).isDisplayed();
-        driver.findElement(emailInput).click();
-        driver.findElement(emailInput).sendKeys(email);
+        WebElement emailField = driver.findElement(emailInput);
+        emailField.isDisplayed();
+        emailField.click();
+        emailField.sendKeys(email);
     }
 
     @Step("Вводим в поле пароль тестовые данные")
     public void setPassInput(String pass) {
-        driver.findElement(passInput).isDisplayed();
-        driver.findElement(passInput).click();
-        driver.findElement(passInput).sendKeys(pass);
+        WebElement passField = driver.findElement(passInput);
+        passField.isDisplayed();
+        passField.click();
+        passField.sendKeys(pass);
     }
 
     @Step("Нажимаем на кнопку - Sign In / Register")
     public void signInClick() {
-        driver.findElement(signInButton).isDisplayed();
-        driver.findElement(signInButton).click();
+        WebElement loginButton = driver.findElement(signInButton);
+        loginButton.isDisplayed();
+        loginButton.click();
     }
 
     @Step("Отображается текст - Удачная авторизация")

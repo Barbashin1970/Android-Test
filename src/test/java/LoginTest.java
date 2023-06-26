@@ -5,10 +5,16 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pageobject.RegPage;
 
 import java.net.URL;
+import java.time.Duration;
+
+import static pageobject.RegPage.emailInput;
 
 
 public class LoginTest {
@@ -46,8 +52,6 @@ public class LoginTest {
     @DisplayName("Вводим валидные данные логин и пароль при авторизации")
     public void validRegistrationTest() {
         RegPage regPage = new RegPage(driver);
-        regPage.setPassInput("1111");
-        regPage.setPassInput("1111");
         regPage.setEmailInput("admin@admin.ru");
         regPage.setPassInput("1234");
         regPage.signInClick();
@@ -59,8 +63,6 @@ public class LoginTest {
     @DisplayName("Вводим неверный пароль при авторизации - ожидаем текст ошибки")
     public void invalidRegistrationTest() {
         RegPage regPage = new RegPage(driver);
-        regPage.setPassInput("1111");
-        regPage.setPassInput("1244");
         regPage.setEmailInput("admin@admin.ru");
         regPage.setPassInput("1111");
         regPage.signInClick();
