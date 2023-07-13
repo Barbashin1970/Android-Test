@@ -13,6 +13,7 @@ import java.net.URL;
 
 public class LoginTest {
     private AppiumDriver<MobileElement> driver;
+    public RegPage regPage;
 
     @Before
     public void setUp() throws Exception {
@@ -27,6 +28,7 @@ public class LoginTest {
         capabilities.setCapability("app", "/Users/olegbarbashin/IdeaProjects/Android1/src/apks/login.apk");
 
         driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+        regPage = new RegPage(driver);
     }
 
     @After
@@ -38,17 +40,13 @@ public class LoginTest {
     @Test
     @DisplayName("Проверяем, что заголовок отображен на главном экране")
     public void checkTitleScreenPageObject() {
-        RegPage regPage = new RegPage(driver);
         Assert.assertTrue("Название не отображается на экране", regPage.checkScreenTitle());
     }
 
     @Test
     @DisplayName("Вводим валидные данные логин и пароль при авторизации")
     public void validRegistrationTest() {
-        RegPage regPage = new RegPage(driver);
-        regPage.setEmailInput("admin@admin.ru");
-        regPage.setPassInput("1234");
-        regPage.signInClick();
+        regPage.setEmailInput("admin@admin.ru").setPassInput("1234").signInClick();
         Assert.assertTrue("Текст успеха не отображается на экране", regPage.successText());
 
     }
@@ -56,10 +54,7 @@ public class LoginTest {
     @Test
     @DisplayName("Вводим неверный пароль при авторизации - ожидаем текст ошибки")
     public void invalidRegistrationTest() {
-        RegPage regPage = new RegPage(driver);
-        regPage.setEmailInput("admin@admin.ru");
-        regPage.setPassInput("1111");
-        regPage.signInClick();
+        regPage.setEmailInput("admin@admin.ru").setPassInput("1111").signInClick();
         Assert.assertTrue("Текст ошибки не отображается на экране", regPage.unSuccessText());
     }
 

@@ -1,6 +1,7 @@
 package pageobject;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -13,9 +14,9 @@ public class RegPage {
     private static final By successAuthText = By.xpath("//*[contains(@text, 'Welcome ! user')]");
     private static final By unSuccessAuthText = By.xpath("//*[contains(@text, 'Login failed')]");
 
-    private final AppiumDriver driver;
+    private final AppiumDriver<MobileElement> driver;
 
-    public RegPage(AppiumDriver driver) {
+    public RegPage(AppiumDriver<MobileElement> driver) {
         this.driver = driver;
     }
 
@@ -25,19 +26,21 @@ public class RegPage {
     }
 
     @Step("Вводим в поле email тестовые данные")
-    public void setEmailInput(String email) {
+    public RegPage setEmailInput(String email) {
         WebElement emailField = driver.findElement(emailInput);
         emailField.isDisplayed();
         emailField.click();
         emailField.sendKeys(email);
+        return this;
     }
 
     @Step("Вводим в поле пароль тестовые данные")
-    public void setPassInput(String pass) {
+    public RegPage setPassInput(String pass) {
         WebElement passField = driver.findElement(passInput);
         passField.isDisplayed();
         passField.click();
         passField.sendKeys(pass);
+        return this;
     }
 
     @Step("Нажимаем на кнопку - Sign In / Register")
