@@ -7,9 +7,9 @@
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 <div align="center">
-<h2 align="center">API Game Config Data Base</h2>
+<h2 align="center">Android Appium Test</h2>
   <p align="center">
-    API для управления ценами игры на уникальный продукт
+    Java / Maven / Appium / Android Studio / Junit5 / Allure-report
   </p>
 </div>
 
@@ -29,8 +29,12 @@
 
 <!-- ABOUT THE PROJECT -->
 
-## Этот проект собран на Java/Maven/Junit5/Appium/Allure 
-# и помогает автоматизировать тесты Андроид-приложения в эмуляторе при помощи Android-Studio
+**Особенности:**
+
+- Автотесты на JUnit5 
+- Андроид-приложение запускается в эмуляторе при помощи Android-Studio
+- Appium GUI запускается в фоновом режиме
+- тесты работают с открытием приложения на экране 
 
 
 **Все позитивные сценарии:**
