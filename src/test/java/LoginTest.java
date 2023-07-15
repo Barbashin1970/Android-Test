@@ -1,53 +1,52 @@
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
-import io.qameta.allure.junit4.DisplayName;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import pageobject.RegPage;
 import java.net.URL;
 
+import static data.AppData.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 public class LoginTest {
-    private AppiumDriver<MobileElement> driver;
-    public RegPage regPage;
+    private static AppiumDriver<MobileElement> driver;
+    public static RegPage regPage;
 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeAll
+    public static void setUp() throws Exception {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
         capabilities.setCapability("platformName", "Android");
         capabilities.setCapability("deviceName", "Pixel_4_API_29");
         capabilities.setCapability("platformVersion", "10");
         capabilities.setCapability("automationName", "Appium");
-        capabilities.setCapability("appPackage", "com.example.login");
-        capabilities.setCapability("appActivity", ".ui.login.LoginActivity");
-        capabilities.setCapability("app", "/Users/olegbarbashin/IdeaProjects/Android1/src/apks/login.apk");
+        capabilities.setCapability("appPackage", appPackage);
+        capabilities.setCapability("appActivity", appActivity);
+        capabilities.setCapability("app", app);
 
-        driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+        driver = new AndroidDriver<>(new URL(URL), capabilities);
         regPage = new RegPage(driver);
     }
 
-    @After
-    public void tearDown() {
+    @AfterAll
+    public static void tearDown() {
         driver.quit();
     }
 
 
     @Test
     @DisplayName("Проверяем, что заголовок отображен на главном экране")
-    public void checkTitleScreenPageObject() {
-        Assert.assertTrue("Название не отображается на экране", regPage.checkScreenTitle());
+    public void checkTitleScreen() {
+        assertTrue(regPage.checkScreenTitle(), "Название не отображается на экране");
     }
 
     @Test
     @DisplayName("Вводим валидные данные логин и пароль при авторизации")
     public void validRegistrationTest() {
         regPage.setEmailInput("admin@admin.ru").setPassInput("1234").signInClick();
-        Assert.assertTrue("Текст успеха не отображается на экране", regPage.successText());
+        assertTrue(regPage.successText(), "Текст успеха не отображается на экране");
 
     }
 
@@ -55,7 +54,7 @@ public class LoginTest {
     @DisplayName("Вводим неверный пароль при авторизации - ожидаем текст ошибки")
     public void invalidRegistrationTest() {
         regPage.setEmailInput("admin@admin.ru").setPassInput("1111").signInClick();
-        Assert.assertTrue("Текст ошибки не отображается на экране", regPage.unSuccessText());
+        assertTrue(regPage.unSuccessText(), "Текст ошибки не отображается на экране");
     }
 
 }
